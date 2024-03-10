@@ -1,0 +1,68 @@
+
+body{
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+}
+
+.section-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.section-container .message-error{
+    color: red;
+}
+
+.section-container form{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 80%;
+}
+
+.section-container form label{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 30%;
+    font-weight: bold;
+}
+.section-container form input{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 90%;
+    height: 35px;
+}
+
+.section-container form .btns{
+    width: 100%;
+}
+
+.section-container form .btns button{
+    padding: 10px;
+}
+
+/* ------------------------- */
+.section-table{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 50px;
+}
+
+table{
+    max-width: 100%;
+    width: 80%;
+    overflow: scroll;
+}
+
+table th{
+    font-weight: 900;
+}
+
+table th, table tr td{
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+}
