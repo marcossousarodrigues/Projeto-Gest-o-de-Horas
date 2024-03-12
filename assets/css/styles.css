@@ -66,3 +66,8 @@ table th, table tr td{
     text-align: center;
     border: 1px solid #ccc;
 }
+
+table .tr-espaco td{
+    border: none;
+    height: 35px;
+}

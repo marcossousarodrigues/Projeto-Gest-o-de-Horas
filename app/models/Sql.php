@@ -11,9 +11,10 @@ class Sql
         $connect = Connection::connect();
 
 
-        $sql = "INSERT INTO tb_gestao_horas (data, hora_inicio, hora_saida)  VALUES (:data, :hora_inicio, :hora_saida)";
+        $sql = "INSERT INTO tb_gestao_horas (projeto, data, hora_inicio, hora_saida)  VALUES (:projeto, :data, :hora_inicio, :hora_saida)";
 
         $stmt = $connect->prepare($sql);
+        $stmt->bindValue(":projeto", $dataParam['projeto']);
         $stmt->bindValue(":data", $dataParam['data']);
         $stmt->bindValue(":hora_inicio", $dataParam['hora_inicio']);
         $stmt->bindValue(":hora_saida", $dataParam['hora_saida']);

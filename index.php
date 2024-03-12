@@ -10,8 +10,5 @@ $controller = new Controller();
 
 $controller::home();
 
-
-
-
 ?>
 

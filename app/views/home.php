@@ -22,6 +22,9 @@
 
         <form id="form" action="./app/routers/Router.php" method="post">
 
+            <label for="Projeto">Nome do Projeto
+                <input type="text" name="projeto" >
+            </label>
             <label for="Data">
                 Data: <input type="date" class="data" name="data" value="2024-03-09">
             </label>
@@ -41,27 +44,48 @@
     </section>
     <section class="section-table">
         <table>
+            <th>Projeto</th>
             <th>Data</th>
             <th>Hora de inicio</th>
             <th>Hora de saída</th>
 
             <?php
-                foreach ($data as $key => $value) {
-            ?>
-            <tr>
-                <td><?php 
                 
-                echo DateTime::createFromFormat('Y-m-d',  $value["data"])->format('d/m/Y');
-                ?></td>
-                <td><?php 
-                echo DateTime::createFromFormat('Y-m-d H:i:s', $value["hora_inicio"])->format('H:i:s');
-                ?></td>
-                <td><?php 
-                echo DateTime::createFromFormat('Y-m-d H:i:s', $value["hora_saida"])->format('H:i:s');
-            
-                ?></td>
-            </tr>
+                $nomeProjetoFinal = "";
+                $samarHoraInicio = 0;
+
+                foreach ($data as $key => $value) {
+                    $samarHoraInicio += strtotime($value["hora_inicio"]);
+                    if( ($value["projeto"] != $nomeProjetoFinal) && $key != 0){
+                        $nomeProjetoFinal = $value["projeto"];
+                    ?>
+                    <!--<tr>
+                        <td>-</td>
+                        <td>-</td>
+                        <td><?php echo date("H:i:s", $samarHoraInicio); ?></td>
+                        <td></td>
+                    </tr>
+                    -->
+                    <tr class="tr-espaco">
+                        <td></td>
+                    </tr>
+                <?php } ?>
+                <tr>
+                    <td>
+                        <?php echo $value["projeto"] ?>
+                    </td>
+                    <td>
+                        <?php echo DateTime::createFromFormat('Y-m-d H:i:s',  $value["data"])->format('d/m/Y');?>
+                    </td>
+                    <td>
+                        <?php echo DateTime::createFromFormat('Y-m-d H:i:s', $value["hora_inicio"])->format('H:i:s');?>
+                    </td>
+                    <td>
+                        <?php echo DateTime::createFromFormat('Y-m-d H:i:s', $value["hora_saida"])->format('H:i:s');?>
+                    </td>
+                </tr>
             <?php
+               $nomeProjetoFinal = $value["projeto"];
                 }
             ?>
 
