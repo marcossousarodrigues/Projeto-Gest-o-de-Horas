@@ -25,7 +25,7 @@ class Sql
     static function read()
     {   
         $connect = Connection::connect();
-        $sql = "SELECT * FROM tb_gestao_horas";
+        $sql = "SELECT * FROM tb_gestao_horas ORDER BY data";
         $stmt = $connect->prepare($sql);
 
         $stmt->execute();

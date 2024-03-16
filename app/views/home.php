@@ -23,10 +23,10 @@
         <form id="form" action="./app/routers/Router.php" method="post">
 
             <label for="Projeto">Nome do Projeto
-                <input type="text" name="projeto" >
+                <input type="text" class="projeto" name="projeto" >
             </label>
             <label for="Data">
-                Data: <input type="date" class="data" name="data" value="2024-03-09">
+                Data: <input type="date" class="data" name="data">
             </label>
 
             <label for="Hora">
@@ -41,35 +41,52 @@
                 <button id="btn-salvar">Salvar</button>
             </div>      
         </form>
+        
+        <form action="" class="form-select-projeto" method="post">
+            <label for="Projeto">Selecione o Projeto:</label>
+            <select name="nomeprojeto" id="">
+                <option value=""></option>
+                <?php
+                // Remove duplicatas do array $data
+                $arraySemRepeticao = array_unique(array_column($data, 'projeto'));
+                
+                foreach ($arraySemRepeticao as $projeto) {
+                    echo '<option value="' . $projeto . '">' . $projeto . '</option>';
+                }
+                ?>
+            </select>
+            <button>OK</button>
+        </form>
+        
+
     </section>
     <section class="section-table">
+
         <table>
-            <th>Projeto</th>
+            <th>Nome do Projeto</th>
             <th>Data</th>
             <th>Hora de inicio</th>
             <th>Hora de saída</th>
+            <th>Total Horas</th>
 
-            <?php
+            <?php $totalHoras = array(); ?>
+            <?php $totalLinha = array(); ?>
+            
+            <?php $nomeProjetoExibir = isset($_POST['nomeprojeto']) ? $_POST['nomeprojeto'] : ""; ?>
+
+            
+            <?php foreach ($data as $key => $value) { ?>
                 
-                $nomeProjetoFinal = "";
-                $samarHoraInicio = 0;
+                <?php
+                if ( empty($nomeProjetoExibir) || trim($value["projeto"]) == $nomeProjetoExibir)
+                {
+            
+                    array_push($totalLinha, substr( $value["hora_inicio"], 11 ) );
+                    array_push($totalLinha, substr( $value["hora_saida"], 11 ) );
 
-                foreach ($data as $key => $value) {
-                    $samarHoraInicio += strtotime($value["hora_inicio"]);
-                    if( ($value["projeto"] != $nomeProjetoFinal) && $key != 0){
-                        $nomeProjetoFinal = $value["projeto"];
-                    ?>
-                    <!--<tr>
-                        <td>-</td>
-                        <td>-</td>
-                        <td><?php echo date("H:i:s", $samarHoraInicio); ?></td>
-                        <td></td>
-                    </tr>
-                    -->
-                    <tr class="tr-espaco">
-                        <td></td>
-                    </tr>
-                <?php } ?>
+                    array_push($totalHoras, $function->subtrairHoras($totalLinha) );
+
+                ?>
                 <tr>
                     <td>
                         <?php echo $value["projeto"] ?>
@@ -83,13 +100,39 @@
                     <td>
                         <?php echo DateTime::createFromFormat('Y-m-d H:i:s', $value["hora_saida"])->format('H:i:s');?>
                     </td>
+                    <td>
+                        <?php echo $function->subtrairHoras($totalLinha); ?>
+                    </td>
                 </tr>
-            <?php
-               $nomeProjetoFinal = $value["projeto"];
-                }
+
+
+
+            <?php 
+                    foreach( $totalLinha as $linha)
+                    {
+                        array_pop($totalLinha);
+                    }
             ?>
 
+            <?php } ?>
+            <?php } ?>
+
+                <tr class="tr-espaco">
+                    <td>Total Horas</td>
+                    <td>---</td>
+                    <td>
+                        ---
+                    </td>
+                    <td>
+                        ---
+                    </td>
+                    <td>
+                        <?php echo $function->sumHours($totalHoras); ?>
+                    </td>
+                </tr>
+
         </table>
+
     </section>
 </body>
 </html>

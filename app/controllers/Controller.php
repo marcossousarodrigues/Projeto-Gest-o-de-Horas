@@ -2,11 +2,14 @@
 
 namespace app\controllers;
 use app\models\Sql;
+use app\functions\Functions;
 
 class Controller{
 
     static function home(){
         $data = Sql::read();
+        $function = new Functions();
+
         require './app/views/home.php';
     }
 
